@@ -18,32 +18,22 @@ import { MVCObject } from "../../maps/event/mvcobject";
 
 export class DataPolygon extends MVCObject implements google.maps.Data.Polygon {
   constructor(
-    elements?:
-      | google.maps.MVCArray<google.maps.MVCArray<google.maps.LatLng>>
-      | google.maps.MVCArray<google.maps.LatLng>
-      | google.maps.LatLng[][]
-      | google.maps.LatLngLiteral[][]
-      | google.maps.LatLng[]
-      | google.maps.LatLngLiteral[]
+    elements?: Array<
+      | google.maps.Data.LinearRing
+      | Array<google.maps.LatLng | google.maps.LatLngLiteral>
+    >
   ) {
     super();
   }
-  public forEachLatLng = jest
-    .fn()
-    .mockImplementation((callback: (a: google.maps.LatLng) => void): void => {
+  public forEachLatLng = jest.fn(
+    (callback: (a: google.maps.LatLng) => void): void => {
       return null;
-    });
-  public getArray = jest
-    .fn()
-    .mockImplementation(
-      (): google.maps.MVCArray<google.maps.LatLng>[] =>
-        [] as google.maps.MVCArray<google.maps.LatLng>[]
-    );
-  public getAt = jest
-    .fn()
-    .mockImplementation(
-      (): google.maps.MVCArray<google.maps.LatLng> | null => null
-    );
-  public getLength = jest.fn().mockImplementation((): number => 0);
-  public getType = jest.fn().mockImplementation((): string => "MultiPolygon");
+    }
+  );
+
+  // fixme: returning MVCArray is wrong
+  public getArray = jest.fn((): google.maps.Data.LinearRing[] => []);
+  public getAt = jest.fn((): google.maps.Data.LinearRing | null => null);
+  public getLength = jest.fn(() => 0);
+  public getType = jest.fn(() => "Polygon");
 }

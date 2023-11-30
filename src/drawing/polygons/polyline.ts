@@ -15,47 +15,32 @@
  */
 
 import { MVCObject } from "../../maps/event/mvcobject";
+import { MVCArray } from "../../maps/event/mvcarray";
 
 export class Polyline extends MVCObject implements google.maps.Polyline {
   constructor(opts?: google.maps.PolylineOptions | null) {
     super();
   }
 
-  public getDraggable = jest.fn().mockImplementation((): boolean => false);
-  public getEditable = jest.fn().mockImplementation((): boolean => false);
-  public getMap = jest
-    .fn()
-    .mockImplementation((): google.maps.Map => ({}) as google.maps.Map);
-  public getPath = jest
-    .fn()
-    .mockImplementation(
-      (): google.maps.MVCArray<google.maps.LatLng> =>
-        ({}) as google.maps.MVCArray<google.maps.LatLng>
-    );
-  public getVisible = jest.fn().mockImplementation((): boolean => false);
-  public setDraggable = jest
-    .fn()
-    .mockImplementation((draggable: boolean): void => {});
-  public setEditable = jest
-    .fn()
-    .mockImplementation((editable: boolean): void => {});
-  public setMap = jest
-    .fn()
-    .mockImplementation((map: google.maps.Map): void => {});
-  public setOptions = jest
-    .fn()
-    .mockImplementation((options: google.maps.PolylineOptions): void => {});
-  public setPath = jest
-    .fn()
-    .mockImplementation(
-      (
-        path:
-          | google.maps.MVCArray<google.maps.LatLng>
-          | google.maps.LatLng[]
-          | google.maps.LatLngLiteral[]
-      ): void => {}
-    );
-  public setVisible = jest
-    .fn()
-    .mockImplementation((visible: boolean): void => {});
+  public getDraggable = jest.fn(() => false);
+  public getEditable = jest.fn(() => false);
+  public getMap = jest.fn((): google.maps.Map | null => null);
+  public getPath = jest.fn(
+    (): google.maps.MVCArray<google.maps.LatLng> => new MVCArray()
+  );
+  public getVisible = jest.fn(() => false);
+  public setDraggable = jest.fn((draggable: boolean): void => {});
+  public setEditable = jest.fn((editable: boolean): void => {});
+  public setMap = jest.fn((map: google.maps.Map | null): void => {});
+  public setOptions = jest.fn(
+    (options: google.maps.PolylineOptions | null): void => {}
+  );
+  public setPath = jest.fn(
+    (
+      path:
+        | google.maps.MVCArray<google.maps.LatLng>
+        | Array<google.maps.LatLng | google.maps.LatLngLiteral>
+    ): void => {}
+  );
+  public setVisible = jest.fn((visible: boolean): void => {});
 }
